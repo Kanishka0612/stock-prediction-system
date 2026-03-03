@@ -1,0 +1,10 @@
+# Java
+springboot-api/target/
+
+# Python
+fast-api/__pycache__/
+fast-api/.venv/
+*.pyc
+
+# IDE
+.idea/

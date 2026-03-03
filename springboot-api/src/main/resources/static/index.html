@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Predictor</title>
+    <style>
+        body{margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#667eea,#764ba2);font-family:Arial;color:#fff}
+        .card{background:#ffffff20;padding:40px;border-radius:20px;backdrop-filter:blur(15px);text-align:center;animation:fadeIn 1s ease}
+        input{padding:12px;border:none;border-radius:10px;margin:10px;width:200px}
+        button{padding:12px 20px;border:none;border-radius:10px;background:#fff;color:#764ba2;font-weight:bold;cursor:pointer;transition:.3s}
+        button:hover{transform:scale(1.1)}
+        #result{margin-top:20px;font-size:20px;opacity:0;transition:.5s}
+        .show{opacity:1;transform:translateY(-5px)}
+        @keyframes fadeIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>Stock Prediction</h2>
+    <input id="symbol" placeholder="Enter Symbol (AAPL)">
+    <br>
+    <button onclick="predict()">Predict</button>
+    <div id="result"></div>
+</div>
+<script>
+    function predict(){
+        let s=document.getElementById("symbol").value;
+        fetch("/api/stocks/predict/"+s)
+            .then(r=>r.json())
+            .then(d=>{
+                let res=document.getElementById("result");
+                res.innerText="Predicted Price: $"+d.predicted_price.toFixed(2);
+                res.classList.add("show");
+                setTimeout(()=>res.classList.remove("show"),4000);
+            });
+    }
+</script>
+</body>
+</html>
